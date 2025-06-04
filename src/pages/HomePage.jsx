@@ -26,7 +26,7 @@ const HomePage = () => {
         <div className="text-center text-[#0259aa] text-3xl pt-40">No blogs added yet.</div>
       ) : (
         <>
-          {/* All Blogs */}
+         
           <div className='pt-10'>
             <div className='border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]'>All Blogs</div>
             {blogs.map((blog) => (
