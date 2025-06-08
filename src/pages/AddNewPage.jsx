@@ -37,7 +37,7 @@ const AddNewPage = () => {
     
   return (
     
-        <form onSubmit={handleSubmit} className='bg-[#A5D8FF] pt-10'>
+        <form onSubmit={handleSubmit} className='bg-[#A5D8FF] pt-20'>
             <div className='flex flex-col gap-y-5'>
                 <label htmlFor="" className='border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]'>Title</label>
                 <input type="text"

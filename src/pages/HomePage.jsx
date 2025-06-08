@@ -5,12 +5,16 @@ const API_URL = "http://localhost:3000/blogs";
 
 const HomePage = () => {
   const [blogs, setBlogs] = useState([]);
+  const [favorite, setFavorite] = useState([]);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const res = await axios.get(API_URL);
         setBlogs(res.data);
+
+        const likedBlogs = res.data.filter(blog => blog.liked === true);
+        setFavorite(likedBlogs);
       } catch (error) {
         console.error(error);
       }
@@ -19,19 +23,20 @@ const HomePage = () => {
   }, []);
 
   return (
-    <section>
+    <section className="pt-10">
       {blogs.length === 0 ? (
         <div className="text-center text-[#0259aa] text-3xl pt-40">
           No blogs added yet.
         </div>
       ) : (
-        <>
-          <div className="pt-10 ">
+        <div>
+          <div className="pt-10">
             <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]">
               All Blogs
             </div>
-            {blogs.map((blog) => (
-              <div className="pt-10" key={blog.id}>
+            <div className="grid lg:grid-cols-2">
+              {blogs.map((blog) => (
+              <div className="pt-10 " key={blog.id}>
                 <div className="flex gap-5 border-2 border-[#0259aa] p-2 w-[31rem] rounded-lg mb-5">
                   <div className="flex flex-col gap-5">
                     <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]">
@@ -44,14 +49,35 @@ const HomePage = () => {
                 </div>
               </div>
             ))}
+            </div>
           </div>
 
           <div className="pt-10">
-            <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]">
+            <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa] mb-5">
               Favorite
             </div>
+            <div className="grid grid-cols-2">
+              {favorite.length === 0 ? (
+              <div className="text-gray-500">No favorites yet.</div>
+            ) : (
+              favorite.map((blog) => (
+                <div className="pt-4" key={blog.id}>
+                  <div className="flex gap-5 border-2 border-[#0259aa] p-2 w-[31rem] rounded-lg mb-5">
+                    <div className="flex flex-col gap-5">
+                      <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]">
+                        {blog.title}
+                      </div>
+                      <div className="border-2 border-[#0259aa] w-[24rem] rounded-lg text-center py-4 px-3 break-words">
+                        {blog.description}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+            </div>
           </div>
-        </>
+        </div>
       )}
     </section>
   );
