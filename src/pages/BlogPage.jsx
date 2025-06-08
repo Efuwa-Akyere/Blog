@@ -9,6 +9,8 @@ const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [clickBlog, setClickBlog] = useState(null);
+  const[liked, setLiked] = useState(false)
+  const[blogEditData, setBlogEditData] = useState(null)
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -37,6 +39,28 @@ const BlogPage = () => {
     }
   }
 
+   
+
+  // function handleEdit(blog) {
+  //   setBlogEditData(blog);
+  //   setForm({
+  //     title: blog.title,
+  //     description: blog.description
+  //   });
+  // }
+
+  // async function handleupdate() {
+  //  try {
+  //    const updatedBlog = {...blogEditData, ...form}
+  //   await axios.put(`${API_URL}/${blogEditData.id}`, updatedBlog);
+    
+  //   setBlogs((prev) => prev.map((u) => (b.id === blogEditData.id ? updatedBlog : b)))
+  //   setBlogEditData(null);
+  //  } catch (error) {
+  //   console.log(error)
+  //  }
+  // }
+
   return (
     <section className="flex gap-60">
       <div>
@@ -61,7 +85,8 @@ const BlogPage = () => {
                   </div>
                 </div>
                 <div className="flex gap-5 mb-40 text-2xl">
-                  <button>
+                  <button onClick={() => setLiked(!liked)}
+                    className={liked ? 'text-red-600' : ''}>
                     <IoIosHeartEmpty />
                   </button>
                   <button

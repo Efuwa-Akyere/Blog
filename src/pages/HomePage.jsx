@@ -37,7 +37,7 @@ const HomePage = () => {
                     <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]">
                       {blog.title}
                     </div>
-                    <div className="border-2 border-[#0259aa] w-[24rem] h-36 rounded-lg text-center pt-12">
+                    <div className="border-2 border-[#0259aa] w-[24rem] h-36 rounded-lg text-center pt-12 break-words px-3">
                       {blog.description}
                     </div>
                   </div>
