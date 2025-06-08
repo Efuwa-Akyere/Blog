@@ -73,25 +73,25 @@ const BlogPage = () => {
             <div
               className="pt-10 "
               key={blog.id}
-              onClick={() => setClickBlog(blog)}
+              
             >
               <div className="flex gap-5 border-2 border-[#0259aa] ml-10 p-2 w-[31rem] rounded-lg mb-5">
                 <div className="flex flex-col gap-5">
                   <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]">
                     {blog.title}
                   </div>
-                  <div className="border-2 border-[#0259aa] w-[24rem] h-36 rounded-lg text-center pt-12 pl-1 truncate">
+                  <div  onClick={() => setClickBlog(blog)} className="border-2 border-[#0259aa] w-[24rem] h-36 rounded-lg text-center pt-12 pl-1 truncate">
                     {blog.description}
                   </div>
                 </div>
-                <div className="flex gap-5 mb-40 text-2xl">
+                <div className="flex gap-5 mb-40 text-2xl ">
                   <button onClick={() => setLiked(!liked)}
-                    className={liked ? 'text-red-600' : ''}>
-                    <IoIosHeartEmpty />
+                    className={liked ? 'text-red-600 ' : ''}>
+                    <IoIosHeartEmpty className="cursor-pointer"/>
                   </button>
                   <button
                     onClick={() => handleDelete(blog.id)}
-                    className="text-red-600"
+                    className="text-red-600 cursor-pointer"
                   >
                     <CiTrash />
                   </button>
@@ -101,7 +101,7 @@ const BlogPage = () => {
           ))
         )}
       </div>
-      <div className=" flex pt-10">
+      <div className=" flex pt-10 ">
         {clickBlog ? (
           <div className="flex border-2 border-[#0259aa] p-2 w-[31rem] rounded-lg mb-5">
             <div className="flex flex-col gap-5">
