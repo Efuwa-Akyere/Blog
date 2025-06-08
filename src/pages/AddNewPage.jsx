@@ -11,6 +11,7 @@ const AddNewPage = () => {
     const [form, setForm] = useState({
         title: '',
         description: ''
+        
     });
 
     
