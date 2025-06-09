@@ -36,19 +36,23 @@ const BlogPage = () => {
   const clickLike = async (blog) => {
     const isAlreadyLiked = likedIds.includes(blog.id);
     try {
+      // Update backend
       await axios.put(`${API_URL}/${blog.id}`, {
         ...blog,
         liked: !isAlreadyLiked,
       });
 
       if (isAlreadyLiked) {
+        // Remove from favorites
         setFavorite(favorite.filter((fav) => fav.id !== blog.id));
         setLikedIds(likedIds.filter((id) => id !== blog.id));
       } else {
+        // Add to favorites
         setFavorite([...favorite, { ...blog, liked: true }]);
         setLikedIds([...likedIds, blog.id]);
       }
 
+      // Update blogs in state with new liked status
       setBlogs((prevBlogs) =>
         prevBlogs.map((b) =>
           b.id === blog.id ? { ...b, liked: !isAlreadyLiked } : b
