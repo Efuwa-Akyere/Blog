@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { CiTrash } from "react-icons/ci";
-import { useOutletContext } from "react-router-dom";
 
 const API_URL = "http://localhost:3000/blogs";
 
@@ -11,7 +10,7 @@ const BlogPage = () => {
   const [loading, setLoading] = useState(true);
   const [clickBlog, setClickBlog] = useState(null);
   const [likedIds, setLikedIds] = useState([]);
-  const [favorite, setFavorite] = useOutletContext();
+  const [favorite, setFavorite] = useState([]);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -36,23 +35,23 @@ const BlogPage = () => {
   const clickLike = async (blog) => {
     const isAlreadyLiked = likedIds.includes(blog.id);
     try {
-      // Update backend
+      
       await axios.put(`${API_URL}/${blog.id}`, {
         ...blog,
         liked: !isAlreadyLiked,
       });
 
       if (isAlreadyLiked) {
-        // Remove from favorites
+        
         setFavorite(favorite.filter((fav) => fav.id !== blog.id));
         setLikedIds(likedIds.filter((id) => id !== blog.id));
       } else {
-        // Add to favorites
+        
         setFavorite([...favorite, { ...blog, liked: true }]);
         setLikedIds([...likedIds, blog.id]);
       }
 
-      // Update blogs in state with new liked status
+      
       setBlogs((prevBlogs) =>
         prevBlogs.map((b) =>
           b.id === blog.id ? { ...b, liked: !isAlreadyLiked } : b
@@ -82,7 +81,7 @@ const BlogPage = () => {
     }
   }
 
-  if (loading) return <div>Loading...</div>;
+
 
   return (
     <section className="flex gap-60 pt-10">
@@ -140,14 +139,14 @@ const BlogPage = () => {
             <div>
               <button
                 onClick={() => setClickBlog(null)}
-                className="text-red-600"
+                className="text-red-600 cursor-pointer"
               >
                 close
               </button>
             </div>
           </div>
         ) : (
-          ""
+          <div className="text-2xl pt-10 pl-10 text-gray-500">Click on Blog to view details</div>
         )}
       </div>
     </section>

@@ -7,7 +7,7 @@ const RootLayout = () => {
   return (
     <>
     <Navbar />
-    <Outlet context={[favorite, setfavorite]}/>
+    <Outlet />
     </>
   )
 }
