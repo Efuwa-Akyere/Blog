@@ -19,11 +19,10 @@ const BlogPage = () => {
         const res = await axios.get(API_URL);
         setBlogs(res.data);
 
-       
-        const likedBlogs = res.data.filter(blog => blog.liked === true);
-        setLikedIds(likedBlogs.map(blog => blog.id));
+        const likedBlogs = res.data.filter((blog) => blog.liked === true);
+        setLikedIds(likedBlogs.map((blog) => blog.id));
         setFavorite(likedBlogs);
-        
+
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -34,26 +33,26 @@ const BlogPage = () => {
     fetchBlogs();
   }, []);
 
-  // Function to update liked status in backend
   const clickLike = async (blog) => {
     const isAlreadyLiked = likedIds.includes(blog.id);
     try {
-      // Update backend
-      await axios.put(`${API_URL}/${blog.id}`, { ...blog, liked: !isAlreadyLiked });
+      await axios.put(`${API_URL}/${blog.id}`, {
+        ...blog,
+        liked: !isAlreadyLiked,
+      });
 
       if (isAlreadyLiked) {
-        // Remove from favorites
-        setFavorite(favorite.filter(fav => fav.id !== blog.id));
-        setLikedIds(likedIds.filter(id => id !== blog.id));
+        setFavorite(favorite.filter((fav) => fav.id !== blog.id));
+        setLikedIds(likedIds.filter((id) => id !== blog.id));
       } else {
-        // Add to favorites
         setFavorite([...favorite, { ...blog, liked: true }]);
         setLikedIds([...likedIds, blog.id]);
       }
 
-      // Update blogs in state with new liked status
-      setBlogs(prevBlogs =>
-        prevBlogs.map(b => (b.id === blog.id ? { ...b, liked: !isAlreadyLiked } : b))
+      setBlogs((prevBlogs) =>
+        prevBlogs.map((b) =>
+          b.id === blog.id ? { ...b, liked: !isAlreadyLiked } : b
+        )
       );
     } catch (error) {
       console.error(error);
@@ -66,11 +65,11 @@ const BlogPage = () => {
     try {
       setLoading(true);
       await axios.delete(`${API_URL}/${id}`);
-      setBlogs(blogs.filter(blog => blog.id !== id)); 
+      setBlogs(blogs.filter((blog) => blog.id !== id));
 
-      setFavorite(favorite.filter(fav => fav.id !== id));
+      setFavorite(favorite.filter((fav) => fav.id !== id));
 
-      setLikedIds(likedIds.filter(id => id !== id));
+      setLikedIds(likedIds.filter((id) => id !== id));
 
       setLoading(false);
     } catch (error) {
