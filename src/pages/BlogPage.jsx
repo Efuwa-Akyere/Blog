@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { CiTrash } from "react-icons/ci";
@@ -35,23 +35,19 @@ const BlogPage = () => {
   const clickLike = async (blog) => {
     const isAlreadyLiked = likedIds.includes(blog.id);
     try {
-      
       await axios.put(`${API_URL}/${blog.id}`, {
         ...blog,
         liked: !isAlreadyLiked,
       });
 
       if (isAlreadyLiked) {
-        
         setFavorite(favorite.filter((fav) => fav.id !== blog.id));
         setLikedIds(likedIds.filter((id) => id !== blog.id));
       } else {
-        
         setFavorite([...favorite, { ...blog, liked: true }]);
         setLikedIds([...likedIds, blog.id]);
       }
 
-      
       setBlogs((prevBlogs) =>
         prevBlogs.map((b) =>
           b.id === blog.id ? { ...b, liked: !isAlreadyLiked } : b
@@ -69,11 +65,9 @@ const BlogPage = () => {
       setLoading(true);
       await axios.delete(`${API_URL}/${id}`);
       setBlogs(blogs.filter((blog) => blog.id !== id));
-
       setFavorite(favorite.filter((fav) => fav.id !== id));
-
-      setLikedIds(likedIds.filter((id) => id !== id));
-
+      setLikedIds(likedIds.filter((likedId) => likedId !== id));
+      setClickBlog(null);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -81,10 +75,8 @@ const BlogPage = () => {
     }
   }
 
-
-
   return (
-    <section className="flex gap-60 pt-10">
+    <section className="flex gap-60 pt-10 bg-violet-200 min-h-screen">
       <div>
         {blogs.length === 0 ? (
           <div className="text-[#0259aa] text-3xl pt-40 pl-[30rem]">
@@ -93,14 +85,12 @@ const BlogPage = () => {
         ) : (
           blogs.map((blog) => (
             <div className="pt-10 " key={blog.id}>
-              <div className="flex gap-5 border-2 border-[#0259aa] ml-10 p-2 w-[31rem] rounded-lg mb-5">
-                <div className="flex flex-col gap-5">
-                  <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]">
-                    {blog.title}
-                  </div>
+              <div className="flex gap-5 border-1 border-violet-300 shadow-lg ml-10 p-2 w-[27rem] rounded-lg mb-5">
+                <div className="flex flex-col gap-5 ">
+                  <div className=" text-xl text-[#0259aa]">{blog.title}</div>
                   <div
                     onClick={() => setClickBlog(blog)}
-                    className="border-2 border-[#0259aa] w-[24rem] h-36 rounded-lg text-center pt-12 pl-1 truncate"
+                    className="border-1 border-violet-300  w-[20rem] h-36 rounded-lg text-center text-[#0259aa] pt-12 pl-1 truncate"
                   >
                     {blog.description}
                   </div>
@@ -108,9 +98,13 @@ const BlogPage = () => {
                 <div className="flex gap-5 mb-40 text-2xl ">
                   <button
                     onClick={() => clickLike(blog)}
-                    className={likedIds.includes(blog.id) ? "text-red-600" : ""}
+                    className={
+                      likedIds.includes(blog.id)
+                        ? "text-red-600"
+                        : "text-[#0259aa]"
+                    }
                   >
-                    <IoIosHeartEmpty className="cursor-pointer" />
+                    <IoIosHeartEmpty className="cursor-pointer " />
                   </button>
 
                   <button
@@ -125,30 +119,33 @@ const BlogPage = () => {
           ))
         )}
       </div>
-      <div className=" flex pt-10 ">
-        {clickBlog ? (
-          <div className="flex border-2 border-[#0259aa] p-2 w-[31rem] rounded-lg mb-5">
-            <div className="flex flex-col gap-5">
-              <div className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]">
-                {clickBlog.title}
+
+      {blogs.length > 0 && (
+        <div className=" flex pt-10 ">
+          {clickBlog ? (
+            <div className="flex border-1 border-violet-300 shadow-lg p-2 w-[28rem] rounded-lg mb-5">
+              <div className="flex flex-col gap-5">
+                <div className=" text-xl text-[#0259aa]">{clickBlog.title}</div>
+                <div className=" w-[24rem] border-1 border-violet-300 h-36 text-[#0259aa] rounded-lg text-center pt-4 px-3 break-words">
+                  {clickBlog.description}
+                </div>
               </div>
-              <div className="border-2 border-[#0259aa] w-[24rem] rounded-lg text-center pt-4 px-3 break-words">
-                {clickBlog.description}
+              <div>
+                <button
+                  onClick={() => setClickBlog(null)}
+                  className="text-red-600 cursor-pointer"
+                >
+                  close
+                </button>
               </div>
             </div>
-            <div>
-              <button
-                onClick={() => setClickBlog(null)}
-                className="text-red-600 cursor-pointer"
-              >
-                close
-              </button>
+          ) : (
+            <div className="text-2xl pt-10 pl-10 text-gray-500">
+              Click on Blog to view details
             </div>
-          </div>
-        ) : (
-          <div className="text-2xl pt-10 pl-10 text-gray-500">Click on Blog to view details</div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </section>
   );
 };

@@ -23,7 +23,7 @@ function App() {
           element: <BlogPage favorite={favorite} setFavorite={setFavorite} />
         },
         {
-          path: 'addnew',
+          index: true,
           element: <AddNewPage />
         }
       ]

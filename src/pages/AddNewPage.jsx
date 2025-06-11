@@ -31,11 +31,11 @@ const AddNewPage = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#A5D8FF] pt-20">
-      <div className="flex flex-col gap-y-5">
+    <form onSubmit={handleSubmit} className="pt-20 px-4 h-[100vh] bg-violet-200">
+      <div className="flex flex-col ">
         <label
           htmlFor=""
-          className="border-2 border-[#0259aa] w-32 h-9 text-center rounded-lg text-xl text-[#0259aa]"
+          className=" border-[#0259aa] w-32 h-9 text-center  text-xl text-[#0259aa]"
         >
           Title
         </label>
@@ -46,14 +46,14 @@ const AddNewPage = () => {
           placeholder="Enter title..."
           value={form.title}
           onChange={(event) => setForm({ ...form, title: event.target.value })}
-          className="border-2 border-[#0259aa] w-[24rem] h-16 rounded-lg text-center "
+          className="border-1 border-violet-400 shadow-sm w-[24rem] h-16 rounded-lg text-center focus:border-violet-500"
         />
       </div>
 
-      <div className="flex flex-col pt-16 gap-y-5">
+      <div className="flex flex-col pt-16">
         <label
           htmlFor=""
-          className="border-2 border-[#0259aa] w-44 h-9 text-center rounded-lg text-xl text-[#0259aa]"
+          className=" border-[#0259aa] w-44 h-9 text-center  text-xl text-[#0259aa]"
         >
           Description
         </label>
@@ -66,13 +66,13 @@ const AddNewPage = () => {
           onChange={(event) =>
             setForm({ ...form, description: event.target.value })
           }
-          className="border-2 border-[#0259aa] w-[24rem] h-36  rounded-lg text-center pt-12 "
+          className="border-1 w-[24rem] h-36  rounded-lg text-center pt-12 border-violet-400 shadow-sm "
         ></textarea>
       </div>
       <div className="pt-16 pl-[8rem]">
         <button
           type="submit"
-          className="border-2 border-[#0259aa] text-[#0259aa] w-32 px-12 py-1 rounded-lg text-xl hover:bg-[#0259aa] hover:text-white"
+          className=" bg-violet-400 text-[#0259aa] w-32 px-12 py-1 rounded-lg text-xl hover:bg-violet-700 hover:text-white"
         >
           Add
         </button>
